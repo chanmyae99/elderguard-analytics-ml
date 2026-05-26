@@ -12,7 +12,7 @@
 # ============================================================
 
 data:
-  db_path: "data/gas_monitoring.db"
+  db_path: "data/raw/gas_monitoring.db"
   table_name: "gas_monitoring"
   test_size: 0.2
   random_state: 42
