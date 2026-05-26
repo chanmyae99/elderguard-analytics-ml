@@ -47,8 +47,8 @@ def parse_args():
         description="ElderGuard Activity Level Prediction Pipeline"
     )
     parser.add_argument(
-        "--config", type=str, default="config.yaml",
-        help="Path to the YAML config file (default: config.yaml)"
+        "--config", type=str, default="config/config.yaml",
+        help="Path to the YAML config file (default: config/config.yaml)"
     )
     parser.add_argument(
         "--model", type=str, default=None,
