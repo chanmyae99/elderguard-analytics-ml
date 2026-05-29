@@ -3,22 +3,23 @@
 # run.sh — ElderGuard Analytics Pipeline Runner
 #
 # Usage:
-#   ./run.sh                            # default config, random_forest
-#   ./run.sh --model xgboost            # override model
-#   ./run.sh --model logistic_regression
-#   ./run.sh --config custom.yaml       # custom config file
+#   ./run.sh              # run pipeline normally
+#   ./run.sh --smote      # run with SMOTE oversampling
 # ============================================================
 
-set -e  # exit immediately on error
+set -e  # stop immediately if any command fails
 
 echo "================================================"
 echo "  ElderGuard Analytics — ML Pipeline"
 echo "================================================"
 
-# Pass all arguments through to pipeline.py
-python pipeline.py "$@"
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the pipeline, pass any arguments through (e.g. --smote)
+python src/main.py "$@"
 
 echo ""
 echo "================================================"
-echo "  Done. Check saved_model/ for outputs."
+echo "  Done. Check reports/ and saved_model/"
 echo "================================================"
