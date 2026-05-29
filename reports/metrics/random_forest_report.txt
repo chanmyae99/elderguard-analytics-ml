@@ -1,11 +1,11 @@
-ElderGuard Analytics â€” Random Forest
+ElderGuard Analytics — Random Forest
 =======================================================
 Accuracy   : 0.6798
 Precision  : 0.6393 (macro)
 Recall     : 0.5439 (macro)
 F1 Macro   : 0.5522
 F1 Weighted: 0.6666
-CV Accuracy: 0.6786 Â± 0.0039
+CV Accuracy: 0.6786 ± 0.0039
 
 Classification Report:
               precision    recall  f1-score   support
