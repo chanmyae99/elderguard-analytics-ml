@@ -1,7 +1,4 @@
 """
-xgboost_model.py
-----------------
-XGBoost (Gradient Boosting) model for Activity Level prediction.
 
 Inherits from BaseModel and imports hyperparameters from
 src/utils/config.py (which reads config/config.yaml).
@@ -13,7 +10,6 @@ boosting corrects residual errors from prior trees, helping
 distinguish the fuzzy Low/Moderate activity boundary in sensor
 data. Outperforms Random Forest on accuracy.
 
-Author: [Your Name]
 """
 
 import numpy as np

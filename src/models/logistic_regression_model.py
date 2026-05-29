@@ -1,7 +1,4 @@
 """
-logistic_regression_model.py
------------------------------
-Logistic Regression model for Activity Level prediction.
 
 Inherits from BaseModel and imports hyperparameters from
 src/utils/config.py (which reads config/config.yaml).
@@ -15,7 +12,6 @@ sensor data are non-linear — itself a useful EDA finding.
 Requires StandardScaler (apply_scaling=True in FeatureEngineer)
 because Logistic Regression is sensitive to feature magnitude.
 
-Author: [Your Name]
 """
 
 import numpy as np

@@ -1,7 +1,4 @@
 """
-random_forest_model.py
-----------------------
-Random Forest model for Activity Level prediction.
 
 Inherits from BaseModel and imports hyperparameters from
 src/utils/config.py (which reads config/config.yaml).
@@ -13,7 +10,6 @@ natively, requires no feature scaling, and uses
 class_weight='balanced' to address class imbalance (High
 Activity ~11%) without needing SMOTE.
 
-Author: [Your Name]
 """
 
 import numpy as np
