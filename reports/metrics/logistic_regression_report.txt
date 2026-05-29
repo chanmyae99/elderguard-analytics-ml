@@ -1,0 +1,19 @@
+ElderGuard Analytics — Logistic Regression
+=======================================================
+Accuracy   : 0.6065
+Precision  : 0.3835 (macro)
+Recall     : 0.4098 (macro)
+F1 Macro   : 0.3887
+F1 Weighted: 0.5557
+CV Accuracy: 0.6240 ± 0.0043
+
+Classification Report:
+              precision    recall  f1-score   support
+
+        High       0.00      0.00      0.00       206
+         Low       0.63      0.84      0.72      1082
+    Moderate       0.52      0.39      0.44       595
+
+    accuracy                           0.61      1883
+   macro avg       0.38      0.41      0.39      1883
+weighted avg       0.53      0.61      0.56      1883
