@@ -16,8 +16,7 @@ import argparse
 # Ensure project root is on path when running from root
 sys.path.insert(0, ".")
 
-from src.pipeline import run_pipeline
-
+from pipeline import run_pipeline 
 
 def parse_args():
     parser = argparse.ArgumentParser(
