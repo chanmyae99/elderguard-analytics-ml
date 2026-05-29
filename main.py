@@ -8,7 +8,6 @@ Usage
     python src/main.py
     python src/main.py --smote       # enable SMOTE oversampling
 
-Author: [Your Name]
 """
 
 import sys

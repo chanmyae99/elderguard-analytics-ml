@@ -7,7 +7,6 @@ Receives prepared data from DataService, instantiates each model,
 trains with cross-validation, and returns fitted models for
 evaluation by EvaluationService.
 
-Author: [Your Name]
 """
 
 import joblib

@@ -7,7 +7,6 @@ Enforces a consistent interface (train, predict, predict_proba)
 across Logistic Regression, Random Forest, and XGBoost so they
 can be used interchangeably in training_service.py.
 
-Author: [Your Name]
 """
 
 from abc import ABC, abstractmethod

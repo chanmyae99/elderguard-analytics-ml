@@ -6,7 +6,7 @@ them as module-level constants.
 
 All pipeline modules import from here — no hardcoded values elsewhere.
 
-Author: [Your Name]
+
 """
 
 import yaml

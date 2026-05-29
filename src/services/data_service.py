@@ -7,7 +7,7 @@ Acts as the entry point of the data pipeline — loads the CSV,
 runs feature engineering, splits into train/test, and optionally
 handles class imbalance.
 
-Author: [Your Name]
+
 """
 
 import pandas as pd

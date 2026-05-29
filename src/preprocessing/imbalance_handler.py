@@ -13,7 +13,6 @@ Strategy: SMOTE is NOT applied blindly.
   2. Evaluate minority-class (High Activity) performance
   3. Enable SMOTE in config only if High Activity recall is weak
 
-Author: [Your Name]
 """
 
 import numpy as np
