@@ -1,42 +1,39 @@
 # ============================================================
 # ElderGuard Analytics — Pipeline Configuration
-#
-# HOW TO ADD MORE MODELS
-# ----------------------
-# 1. Add a new block under `models:` with your hyperparameters
-#    (see the commented-out examples below).
-# 2. Register the model name in src/model_factory.py
-#    (follow the pattern already there).
-# 3. Change `active_model` to your new model name, or pass
-#    --model <name> on the command line.
 # ============================================================
 
 data:
-  db_path: "data/raw/gas_monitoring.db"
-  table_name: "gas_monitoring"
+  csv_path: "data/processed/gas_monitoring_processed.csv"
   test_size: 0.2
   random_state: 42
 
 preprocessing:
-  temperature_min: 5.0
-  temperature_max: 60.0
-  median_impute_cols:
-    - "Humidity"
-    - "MetalOxideSensor_Unit2"
-    - "CO_GasSensor"
-  mode_impute_cols:
-    - "Ambient Light Level"
   drop_cols:
     - "Session ID"
+  categorical_cols:
+    - "Time of Day"
+    - "HVAC Operation Mode"
+    - "Ambient Light Level"
+  target_col: "Activity Level"
 
-feature_engineering:
-  enabled: true
+imbalance_handling:
+  # Set enabled: true to apply SMOTE after evaluating baseline models
+  enabled: false
 
 models:
-  # ── Active model ─────────────────────────────────────────
-  active_model: "xgboost"
+  logistic_regression:
+    C: 1.0
+    max_iter: 1000
+    solver: "lbfgs"
 
-  # ── Model 1 (active) ─────────────────────────────────────
+  random_forest:
+    n_estimators: 300
+    max_depth: null
+    min_samples_leaf: 1
+    max_features: "sqrt"
+    class_weight: "balanced"
+    n_jobs: -1
+
   xgboost:
     n_estimators: 400
     max_depth: 8
@@ -45,30 +42,14 @@ models:
     colsample_bytree: 0.8
     n_jobs: -1
 
-  # ── Model 2 (add your second model here) ─────────────────
-  # Uncomment and fill in hyperparameters, then register the
-  # model name in src/model_factory.py
-  #
-  # random_forest:
-  #   n_estimators: 300
-  #   max_depth: null
-  #   min_samples_leaf: 1
-  #   max_features: "sqrt"
-  #   class_weight: "balanced"
-  #   n_jobs: -1
-
-  # ── Model 3 (add your third model here) ──────────────────
-  #
-  # logistic_regression:
-  #   max_iter: 1000
-  #   C: 1.0
-  #   solver: "lbfgs"
-
 evaluation:
   cv_folds: 5
-  scoring: "accuracy"
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
 
 output:
   model_dir: "saved_model"
-  model_filename: "model.pkl"
-  report_filename: "evaluation_report.txt"
+  report_dir: "reports"
