@@ -1,0 +1,55 @@
+# ============================================================
+# ElderGuard Analytics — Pipeline Configuration
+# ============================================================
+
+data:
+  csv_path: "data/processed/gas_monitoring_processed.csv"
+  test_size: 0.2
+  random_state: 42
+
+preprocessing:
+  drop_cols:
+    - "Session ID"
+  categorical_cols:
+    - "Time of Day"
+    - "HVAC Operation Mode"
+    - "Ambient Light Level"
+  target_col: "Activity Level"
+
+imbalance_handling:
+  # Set enabled: true to apply SMOTE after evaluating baseline models
+  enabled: false
+
+models:
+  logistic_regression:
+    C: 1.0
+    max_iter: 1000
+    solver: "lbfgs"
+
+  random_forest:
+    n_estimators: 300
+    max_depth: null
+    min_samples_leaf: 1
+    max_features: "sqrt"
+    class_weight: "balanced"
+    n_jobs: -1
+
+  xgboost:
+    n_estimators: 400
+    max_depth: 8
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    n_jobs: -1
+
+evaluation:
+  cv_folds: 5
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+
+output:
+  model_dir: "saved_model"
+  report_dir: "reports"
