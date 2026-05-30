@@ -44,9 +44,9 @@ class FeatureEngineer:
     """
 
     def __init__(self, apply_scaling: bool = False):
-        self.apply_scaling   = apply_scaling
-        self.label_encoder   = LabelEncoder()
-        self.scaler          = StandardScaler() if apply_scaling else None
+        self.apply_scaling = apply_scaling
+        self.label_encoder = LabelEncoder()
+        self.scaler = StandardScaler() if apply_scaling else None
         self.feature_columns = None
 
     def fit_transform(self, df: pd.DataFrame):
@@ -75,23 +75,21 @@ class FeatureEngineer:
 
         # Step 3 — Encode target
         y = self.label_encoder.fit_transform(y_raw.astype(str))
-        print(f"[feature_engineer] Target encoding: "
-              f"{ {c: i for i, c in enumerate(self.label_encoder.classes_)} }")
+        print(
+            f"[feature_engineer] Target encoding: "
+            f"{ {c: i for i, c in enumerate(self.label_encoder.classes_)} }"
+        )
 
         # Step 4 — One-hot encode categorical features
         # Reason: categories have no numerical order — OHE prevents
         # false mathematical relationships between categories
-        X = pd.get_dummies(df, columns=CATEGORICAL_COLS, drop_first=False)
+        X = pd.get_dummies(df, columns=CATEGORICAL_COLS, drop_first=False, dtype=int)
         self.feature_columns = X.columns.tolist()
-        print(f"[feature_engineer] Features after OHE: "
-              f"{len(self.feature_columns)}")
+        print(f"[feature_engineer] Features after OHE: " f"{len(self.feature_columns)}")
 
         # Step 5 — Scale (Logistic Regression only)
         if self.apply_scaling:
-            X = pd.DataFrame(
-                self.scaler.fit_transform(X),
-                columns=self.feature_columns
-            )
+            X = pd.DataFrame(self.scaler.fit_transform(X), columns=self.feature_columns)
             print("[feature_engineer] StandardScaler applied")
 
         return X, y
@@ -117,16 +115,13 @@ class FeatureEngineer:
         y_raw = df.pop(TARGET_COL)
         y = self.label_encoder.transform(y_raw.astype(str))
 
-        X = pd.get_dummies(df, columns=CATEGORICAL_COLS, drop_first=False)
+        X = pd.get_dummies(df, columns=CATEGORICAL_COLS, drop_first=False, dtype=int)
 
         # Align to training columns — handles any unseen categories
         X = X.reindex(columns=self.feature_columns, fill_value=0)
 
         if self.apply_scaling:
-            X = pd.DataFrame(
-                self.scaler.transform(X),
-                columns=self.feature_columns
-            )
+            X = pd.DataFrame(self.scaler.transform(X), columns=self.feature_columns)
 
         return X, y
 
@@ -136,8 +131,15 @@ class FeatureEngineer:
         return list(self.label_encoder.classes_)
 
 
-# ── Standalone usage (matches existing file pattern) ──────────
 if __name__ == "__main__":
     loader = CSVLoader(PROCESSED_DATA_PATH)
     df = loader.load()
-    print(df.head())
+
+    engineer = FeatureEngineer(apply_scaling=False)
+    X, y = engineer.fit_transform(df)
+
+    print(X.head())
+    print(X.dtypes)
+    print("X shape:", X.shape)
+    print("y shape:", y.shape)
+    print("Classes:", engineer.class_names)
