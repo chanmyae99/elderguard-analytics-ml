@@ -136,18 +136,3 @@ class DataService:
         )
 
 
-if __name__ == "__main__":
-    service = DataService(
-        apply_imbalance_handling=False
-    )
-
-    data = service.prepare()
-
-    print("\n[data_service] Data preparation completed.")
-    print("X_train_tree:", data["X_train_tree"].shape)
-    print("X_test_tree :", data["X_test_tree"].shape)
-    print("X_train_lr  :", data["X_train_lr"].shape)
-    print("X_test_lr   :", data["X_test_lr"].shape)
-    print("y_train     :", data["y_train"].shape)
-    print("y_test      :", data["y_test"].shape)
-    print("Classes     :", data["class_names"])
