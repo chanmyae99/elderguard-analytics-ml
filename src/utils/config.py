@@ -24,8 +24,10 @@ with open(os.path.normpath(_CONFIG_PATH), "r") as f:
 
 # ── Data paths ────────────────────────────────────────────────
 PROCESSED_DATA_PATH = _cfg["data"]["csv_path"]
-DB_PATH             = _cfg["data"].get("db_path", "data/gas_monitoring.db")
+DB_PATH             = _cfg["data"].get("db_path", "data/raw/gas_monitoring.db")
 DB_TABLE            = _cfg["data"].get("db_table", "gas_monitoring")
+
+
 
 # ── Columns ───────────────────────────────────────────────────
 TARGET_COL       = _cfg["preprocessing"]["target_col"]
