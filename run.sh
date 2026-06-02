@@ -1,4 +1,4 @@
-#!/bin/bash
+g#!/bin/bash
 # ============================================================
 # run.sh — ElderGuard Analytics Pipeline Runner
 #
