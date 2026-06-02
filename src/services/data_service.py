@@ -1,114 +1,138 @@
 """
 data_service.py
 ---------------
-Orchestrates data loading and preprocessing.
-
-Acts as the entry point of the data pipeline — loads the CSV,
-runs feature engineering, splits into train/test, and optionally
-handles class imbalance.
-
-
+Coordinates data loading, feature engineering, splitting, and optional
+class imbalance handling for the ML pipeline.
 """
 
 import pandas as pd
 
 from src.ingestion.csv_loader import CSVLoader
 from src.preprocessing.feature_engineer import FeatureEngineer
-from src.preprocessing.data_splitter import DataSplitter
 from src.preprocessing.imbalance_handler import ImbalanceHandler
 from src.utils.config import (
     PROCESSED_DATA_PATH,
     RANDOM_STATE,
+    TEST_SIZE,
+    TARGET_COL,
 )
 
 
 class DataService:
     """
-    Loads and prepares data for model training and evaluation.
+    Prepares model-ready train and test datasets.
 
-    Attributes
-    ----------
-    fe_tree : FeatureEngineer
-        Feature engineer for tree-based models (no scaling).
-    fe_lr : FeatureEngineer
-        Feature engineer for Logistic Regression (with scaling).
-    class_names : list
-        Human-readable class labels in encoded order.
+    Logistic Regression uses scaled features.
+    Tree-based models use unscaled features.
     """
 
     def __init__(self, apply_imbalance_handling: bool = False):
-        """
-        Args:
-            apply_imbalance_handling: Set True to apply SMOTE on
-                training data. Default False — train baseline first.
-        """
         self.apply_imbalance_handling = apply_imbalance_handling
-        self.fe_tree    = FeatureEngineer(apply_scaling=False)
-        self.fe_lr      = FeatureEngineer(apply_scaling=True)
+        self.tree_feature_engineer = FeatureEngineer(apply_scaling=False)
+        self.lr_feature_engineer = FeatureEngineer(apply_scaling=True)
         self.class_names = None
 
     def prepare(self):
         """
-        Load data and return train/test splits for all models.
+        Load data, split into train/test, apply feature engineering,
+        and optionally apply SMOTE to training data only.
 
-        Returns
-        -------
-        dict with keys:
-            X_train_tree, X_test_tree  — for Random Forest and XGBoost
-            X_train_lr, X_test_lr      — for Logistic Regression (scaled)
-            y_train, y_test            — shared encoded labels
+        Returns:
+            dict: Prepared datasets for Logistic Regression and tree models.
         """
-        # Load CSV
-        loader = CSVLoader(PROCESSED_DATA_PATH)
-        df = loader.load()
-        print(f"[data_service] Loaded {len(df):,} rows × "
-              f"{df.shape[1]} columns")
 
-        # Split DataFrame first — fit encoders on train only
-        splitter = DataSplitter()
-        from src.utils.config import TARGET_COL
-        train_df, test_df = self._split_df(df, splitter, TARGET_COL)
+        df = self._load_data()
 
-        # Feature engineering — tree models
-        X_train_tree, y_train = self.fe_tree.fit_transform(train_df)
-        X_test_tree,  y_test  = self.fe_tree.transform(test_df)
+        train_df, test_df = self._split_dataframe(df)
 
-        # Feature engineering — logistic regression (scaled)
-        X_train_lr, _ = self.fe_lr.fit_transform(train_df)
-        X_test_lr,  _ = self.fe_lr.transform(test_df)
-
-        self.class_names = self.fe_tree.class_names
-        print(f"[data_service] Classes: {self.class_names}")
-
-        # Optional SMOTE
-        imb = ImbalanceHandler(
-            enabled=self.apply_imbalance_handling,
-            random_state=RANDOM_STATE
+        X_train_tree, y_train = self.tree_feature_engineer.fit_transform(
+            train_df
         )
-        X_train_tree, y_train = imb.handle(X_train_tree, y_train)
-        X_train_lr,   _       = imb.handle(X_train_lr, y_train)
+        X_test_tree, y_test = self.tree_feature_engineer.transform(
+            test_df
+        )
+
+        X_train_lr, _ = self.lr_feature_engineer.fit_transform(
+            train_df
+        )
+        X_test_lr, _ = self.lr_feature_engineer.transform(
+            test_df
+        )
+
+        self.class_names = self.tree_feature_engineer.class_names
+
+        if self.apply_imbalance_handling:
+            X_train_tree, X_train_lr, y_train = self._apply_smote(
+                X_train_tree,
+                X_train_lr,
+                y_train
+            )
 
         return {
             "X_train_tree": X_train_tree,
-            "X_test_tree" : X_test_tree,
-            "X_train_lr"  : X_train_lr,
-            "X_test_lr"   : X_test_lr,
-            "y_train"     : y_train,
-            "y_test"      : y_test,
+            "X_test_tree": X_test_tree,
+            "X_train_lr": X_train_lr,
+            "X_test_lr": X_test_lr,
+            "y_train": y_train,
+            "y_test": y_test,
+            "class_names": self.class_names,
         }
 
-    def _split_df(self, df: pd.DataFrame,
-                  splitter: DataSplitter,
-                  target_col: str):
-        """Split raw DataFrame into train/test before encoding."""
+    def _load_data(self) -> pd.DataFrame:
+        loader = CSVLoader(PROCESSED_DATA_PATH)
+        df = loader.load()
+
+        print(
+            f"[data_service] Loaded dataset: "
+            f"{df.shape[0]:,} rows × {df.shape[1]} columns"
+        )
+
+        return df
+
+    def _split_dataframe(self, df: pd.DataFrame):
         from sklearn.model_selection import train_test_split
-        from src.utils.config import TEST_SIZE
+
         train_df, test_df = train_test_split(
             df,
             test_size=TEST_SIZE,
-            stratify=df[target_col],
             random_state=RANDOM_STATE,
+            stratify=df[TARGET_COL],
         )
-        print(f"[data_service] Train: {len(train_df):,} | "
-              f"Test: {len(test_df):,}")
+
+        print(
+            f"[data_service] Train rows: {len(train_df):,} | "
+            f"Test rows: {len(test_df):,}"
+        )
+
         return train_df, test_df
+
+    def _apply_smote(self, X_train_tree, X_train_lr, y_train):
+        """
+        Apply SMOTE to training data only.
+
+        Important:
+        The same y_train must be used for both feature versions.
+        """
+
+        handler = ImbalanceHandler(
+            enabled=True,
+            random_state=RANDOM_STATE
+        )
+
+        X_train_tree_resampled, y_train_resampled = handler.handle(
+            X_train_tree,
+            y_train
+        )
+
+        X_train_lr_resampled, _ = handler.handle(
+            X_train_lr,
+            y_train
+        )
+
+        return (
+            X_train_tree_resampled,
+            X_train_lr_resampled,
+            y_train_resampled,
+        )
+
+
