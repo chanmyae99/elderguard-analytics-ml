@@ -78,10 +78,3 @@ class TrainingService:
 
         return trained_models
     
-from src.services.data_service import DataService
-from src.services.training_service import TrainingService
-
-data = DataService(apply_imbalance_handling=True).prepare()
-
-trainer = TrainingService()
-models = trainer.train_all(data)
