@@ -1,0 +1,22 @@
+Model: random_forest
+============================================================
+
+Overall Metrics
+------------------------------------------------------------
+accuracy: 0.6798
+precision_weighted: 0.6852
+recall_weighted: 0.6798
+f1_weighted: 0.6772
+f1_macro: 0.5776
+
+Classification Report
+------------------------------------------------------------
+              precision    recall  f1-score   support
+
+        High       0.44      0.28      0.34       206
+         Low       0.80      0.75      0.77      1082
+    Moderate       0.56      0.70      0.62       595
+
+    accuracy                           0.68      1883
+   macro avg       0.60      0.57      0.58      1883
+weighted avg       0.69      0.68      0.68      1883
