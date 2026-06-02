@@ -1,0 +1,14 @@
+Best Model Selection
+==================================================
+
+Selected Metric: f1_weighted
+Best Model: random_forest
+
+Best Model Scores
+--------------------------------------------------
+model: random_forest
+accuracy: 0.6755
+precision_weighted: 0.6790
+recall_weighted: 0.6755
+f1_weighted: 0.6733
+f1_macro: 0.5683

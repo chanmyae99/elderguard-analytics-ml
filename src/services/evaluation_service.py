@@ -17,6 +17,8 @@ import os
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import joblib
+from src.utils.config import MODEL_DIR
 
 from sklearn.metrics import (
     accuracy_score,
@@ -75,16 +77,18 @@ class EvaluationService:
 
         results_df = pd.DataFrame(results)
 
-        summary_path = os.path.join(
-            self.metrics_dir,
-            "model_comparison_summary.csv"
-        )
+        summary_path = os.path.join(self.metrics_dir, "model_comparison_summary.csv")
 
         results_df.to_csv(summary_path, index=False)
 
+        self._save_best_model(
+            results_df=results_df,
+            trained_models=trained_models,
+            selection_metric="f1_weighted",
+        )
+
         print(
-            f"[evaluation_service] Saved model comparison summary: "
-            f"{summary_path}"
+            f"[evaluation_service] Saved model comparison summary: " f"{summary_path}"
         )
 
         return results_df
@@ -181,8 +185,7 @@ class EvaluationService:
         )
 
         file_path = os.path.join(
-            self.metrics_dir,
-            f"{model_key}_classification_report.txt"
+            self.metrics_dir, f"{model_key}_classification_report.txt"
         )
 
         with open(file_path, "w", encoding="utf-8") as file:
@@ -220,14 +223,9 @@ class EvaluationService:
             xticks_rotation=45,
         )
 
-        display.ax_.set_title(
-            f"{model_key.replace('_', ' ').title()} Confusion Matrix"
-        )
+        display.ax_.set_title(f"{model_key.replace('_', ' ').title()} Confusion Matrix")
 
-        file_path = os.path.join(
-            self.figures_dir,
-            f"{model_key}_confusion_matrix.png"
-        )
+        file_path = os.path.join(self.figures_dir, f"{model_key}_confusion_matrix.png")
 
         plt.tight_layout()
         plt.savefig(file_path, dpi=300)
@@ -264,18 +262,17 @@ class EvaluationService:
             )
             return
 
-        importance_df = pd.DataFrame({
-            "feature": feature_names,
-            "importance": importance_values,
-        }).sort_values(
+        importance_df = pd.DataFrame(
+            {
+                "feature": feature_names,
+                "importance": importance_values,
+            }
+        ).sort_values(
             by="importance",
             ascending=False,
         )
 
-        csv_path = os.path.join(
-            self.metrics_dir,
-            f"{model_key}_feature_importance.csv"
-        )
+        csv_path = os.path.join(self.metrics_dir, f"{model_key}_feature_importance.csv")
 
         importance_df.to_csv(csv_path, index=False)
 
@@ -289,19 +286,13 @@ class EvaluationService:
             top_features["importance"][::-1],
         )
 
-        plt.title(
-            f"Top {top_n} Features - "
-            f"{model_key.replace('_', ' ').title()}"
-        )
+        plt.title(f"Top {top_n} Features - " f"{model_key.replace('_', ' ').title()}")
         plt.xlabel("Importance")
         plt.ylabel("Feature")
 
         plt.tight_layout()
 
-        fig_path = os.path.join(
-            self.figures_dir,
-            f"{model_key}_feature_importance.png"
-        )
+        fig_path = os.path.join(self.figures_dir, f"{model_key}_feature_importance.png")
 
         plt.savefig(fig_path, dpi=300)
         plt.close()
@@ -309,24 +300,78 @@ class EvaluationService:
         print(f"[evaluation_service] Saved feature importance plot: {fig_path}")
 
 
+    def _save_best_model(
+        self,
+        results_df: pd.DataFrame,
+        trained_models: dict,
+        selection_metric: str = "f1_weighted"
+    ):
+        """
+        Select and save the best model based on the chosen evaluation metric.
+        """
 
+        os.makedirs(MODEL_DIR, exist_ok=True)
+
+        best_row = results_df.loc[
+        results_df[selection_metric].idxmax()
+        ]
+
+        best_model_name = best_row["model"]
+        best_model = trained_models[best_model_name]
+
+        best_model_path = os.path.join(
+            MODEL_DIR,
+            "best_model.pkl"
+        )
+
+        best_model_info_path = os.path.join(
+            MODEL_DIR,
+            "best_model_info.txt"
+        )
+
+        joblib.dump(
+            best_model,
+            best_model_path
+        )
+
+        with open(best_model_info_path, "w", encoding="utf-8") as file:
+            file.write("Best Model Selection\n")
+            file.write("=" * 50 + "\n\n")
+            file.write(f"Selected Metric: {selection_metric}\n")
+            file.write(f"Best Model: {best_model_name}\n\n")
+
+            file.write("Best Model Scores\n")
+            file.write("-" * 50 + "\n")
+
+            for column in results_df.columns:
+                value = best_row[column]
+
+                if isinstance(value, float):
+                    file.write(f"{column}: {value:.4f}\n")
+                else:
+                    file.write(f"{column}: {value}\n")
+
+        print(
+            f"[evaluation_service] Best model selected: "
+            f"{best_model_name}"
+        )
+
+        print(
+            f"[evaluation_service] Saved best model: "
+            f"{best_model_path}"
+        )
 
 if __name__ == "__main__":
 
     from src.services.data_service import DataService
     from src.services.training_service import TrainingService
 
-    data = DataService(
-        apply_imbalance_handling=True
-    ).prepare()
+    data = DataService(apply_imbalance_handling=True).prepare()
 
     models = TrainingService().train_all(data)
 
     evaluator = EvaluationService()
 
-    results = evaluator.evaluate_all(
-        models,
-        data
-    )
+    results = evaluator.evaluate_all(models, data)
 
     print(results)
