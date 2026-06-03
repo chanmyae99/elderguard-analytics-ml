@@ -9,7 +9,7 @@ from src.pipeline import Pipeline
 
 def main():
     pipeline = Pipeline(
-        apply_imbalance_handling=True
+        apply_imbalance_handling=True,
     )
 
     pipeline.run()

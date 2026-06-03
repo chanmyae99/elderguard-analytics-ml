@@ -3,20 +3,20 @@ Model: xgboost
 
 Overall Metrics
 ------------------------------------------------------------
-accuracy: 0.6601
-precision_weighted: 0.6548
-recall_weighted: 0.6601
-f1_weighted: 0.6569
-f1_macro: 0.5541
+accuracy: 0.6654
+precision_weighted: 0.6598
+recall_weighted: 0.6654
+f1_weighted: 0.6615
+f1_macro: 0.5614
 
 Classification Report
 ------------------------------------------------------------
               precision    recall  f1-score   support
 
-        High       0.37      0.30      0.33       206
+        High       0.40      0.30      0.34       206
          Low       0.77      0.78      0.77      1082
-    Moderate       0.55      0.57      0.56       595
+    Moderate       0.55      0.59      0.57       595
 
-    accuracy                           0.66      1883
-   macro avg       0.56      0.55      0.55      1883
-weighted avg       0.65      0.66      0.66      1883
+    accuracy                           0.67      1883
+   macro avg       0.57      0.55      0.56      1883
+weighted avg       0.66      0.67      0.66      1883

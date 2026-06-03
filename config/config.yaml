@@ -44,12 +44,15 @@ models:
 
   xgboost:
     n_estimators: 900
-    max_depth: 11
-    learning_rate: 0.08
-    subsample: 0.75
+    max_depth: 10
+    learning_rate: 0.05
+    subsample: 0.7
     colsample_bytree: 0.9
     n_jobs: -1
     random_state: 42
+    reg_alpha: 0
+    reg_lambda: 1
+
 
 evaluation:
   cv_folds: 5
@@ -70,14 +73,20 @@ tuning:
   n_iter: 80
 
   random_forest:
-    n_estimators: [700, 900, 1100]
-    max_depth: [null, 20, 25]
-    min_samples_split: [2, 5]
-    min_samples_leaf: [1, 2]
+    n_estimators: [300, 500, 700]
+    max_depth: [10, 12, 15, 20]
+    min_samples_split: [5, 10]
+    min_samples_leaf: [2, 4]
+
 
   xgboost:
     n_estimators: [500, 700, 900]
-    learning_rate: [0.08, 0.1, 0.12]
-    max_depth: [7, 9, 11]
-    subsample: [0.75, 0.8, 0.85]
-    colsample_bytree: [0.9, 1.0]
+    learning_rate: [0.03, 0.05, 0.08]
+
+    max_depth: [8, 9, 10, 11]
+
+    subsample: [0.7, 0.8, 0.9]
+    colsample_bytree: [0.8, 0.9]
+
+    reg_alpha: [0, 0.5, 1]
+    reg_lambda: [1, 5, 10]
