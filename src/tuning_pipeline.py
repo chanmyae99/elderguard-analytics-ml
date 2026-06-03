@@ -1,38 +1,67 @@
-def _save_tuning_results(self, search, filename):
+"""
+tuning_pipeline.py
+------------------
+Runs hyperparameter tuning separately from the main ML pipeline.
+
+This pipeline is for experimentation only.
+
+It does not replace the main pipeline. After tuning, the best
+hyperparameters should be copied into config/config.yaml under
+the models section. Then the main pipeline should be run again
+to evaluate all three tuned models fairly.
+"""
+
+from src.preprocessing.data_preprocessor import DataPreprocessor
+from src.services.data_service import DataService
+from src.services.training_service import TrainingService
+
+
+class TuningPipeline:
     """
-    Save tuning results for documentation and model justification.
+    Coordinates model hyperparameter tuning.
     """
 
-    import os
-    import pandas as pd
+    def run(self):
+        """
+        Execute the tuning workflow.
+        """
 
-    metrics_dir = os.path.join(
-        REPORT_DIR,
-        "metrics"
-    )
+        print("\n========== ElderGuard Tuning Pipeline Started ==========\n")
 
-    os.makedirs(
-        metrics_dir,
-        exist_ok=True
-    )
+        print("[tuning_pipeline] Step 1: Preprocessing raw data...")
+        DataPreprocessor().run()
 
-    output_path = os.path.join(
-        metrics_dir,
-        filename
-    )
+        print("\n[tuning_pipeline] Step 2: Preparing model-ready data...")
+        data = DataService(
+            apply_imbalance_handling=True
+        ).prepare()
 
-    results_df = pd.DataFrame(search.cv_results_)
+        trainer = TrainingService()
 
-    results_df[
-        [
-            "params",
-            "mean_test_score",
-            "std_test_score",
-            "rank_test_score",
-        ]
-    ].to_csv(output_path, index=False)
+        print("\n[tuning_pipeline] Step 3: Tuning Random Forest...")
+        best_rf_params = trainer.tune_random_forest(data)
 
-    print(
-        f"[training_service] Saved tuning results: "
-        f"{output_path}"
-    )
+        print("\n[tuning_pipeline] Step 4: Tuning XGBoost...")
+        best_xgb_params = trainer.tune_xgboost(data)
+
+        print("\n========== Tuning Completed ==========\n")
+
+        print("Best Random Forest Parameters:")
+        print(best_rf_params)
+
+        print("\nBest XGBoost Parameters:")
+        print(best_xgb_params)
+
+        print(
+            "\nPlease update config/config.yaml with the best parameters, "
+            "then run: python -m src.main"
+        )
+
+
+def main():
+    pipeline = TuningPipeline()
+    pipeline.run()
+
+
+if __name__ == "__main__":
+    main()
