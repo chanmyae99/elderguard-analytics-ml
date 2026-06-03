@@ -60,3 +60,22 @@ evaluation:
 output:
   model_dir: "saved_model"
   report_dir: "reports"
+
+
+tuning:
+  scoring: "f1_weighted"
+  cv_folds: 5
+  n_iter: 30
+
+  random_forest:
+    n_estimators: [100, 200, 300, 500]
+    max_depth: [5, 10, 15, null]
+    min_samples_split: [2, 5, 10]
+    min_samples_leaf: [1, 2, 4]
+
+  xgboost:
+    n_estimators: [100, 200, 300]
+    learning_rate: [0.01, 0.05, 0.1]
+    max_depth: [3, 5, 7]
+    subsample: [0.8, 1.0]
+    colsample_bytree: [0.8, 1.0]

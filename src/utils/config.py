@@ -49,3 +49,6 @@ REPORT_DIR = _cfg["output"]["report_dir"]
 LR_PARAMS  = _cfg["models"]["logistic_regression"]
 RF_PARAMS  = _cfg["models"]["random_forest"]
 XGB_PARAMS = _cfg["models"]["xgboost"]
+
+
+TUNING_CONFIG = _cfg["tuning"]
