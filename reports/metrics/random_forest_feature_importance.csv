@@ -1,25 +1,25 @@
 feature,importance
-MetalOxideSensor_Unit4,0.13607706444093962
-MetalOxideSensor_Unit2,0.12537581168019526
-MetalOxideSensor_Unit3,0.11177102844269668
-CO2_ElectroChemicalSensor,0.09743951872896268
-MetalOxideSensor_Unit1,0.08967856855712975
-CO2_InfraredSensor,0.08274142269166004
-Temperature,0.07647989937332741
-Humidity,0.06485773781679526
-CO_GasSensor,0.04894869863680836
-Ambient Light Level_very_bright,0.016268360994327657
-HVAC Operation Mode_cooling_active,0.013785789273975394
-Ambient Light Level_bright,0.013689467652494765
-HVAC Operation Mode_eco_mode,0.012270702789623578
-HVAC Operation Mode_ventilation_only,0.011823316585465747
-Ambient Light Level_moderate,0.011815612498410793
-Time of Day_evening,0.011591926134219006
-Time of Day_afternoon,0.011461135599428986
-HVAC Operation Mode_heating_active,0.011402198038470517
-HVAC Operation Mode_off,0.010905325027032323
-HVAC Operation Mode_maintenance_mode,0.009769897465235232
-Time of Day_night,0.009647777850502179
-Time of Day_morning,0.009060920995150084
-Ambient Light Level_dim,0.007746560515003614
-Ambient Light Level_very_dim,0.005391258212145065
+MetalOxideSensor_Unit4,0.145358146609151
+MetalOxideSensor_Unit3,0.13063200519119678
+MetalOxideSensor_Unit2,0.12936431991601058
+CO2_ElectroChemicalSensor,0.11288745277360646
+Temperature,0.09511291562982731
+MetalOxideSensor_Unit1,0.09140866950189282
+CO2_InfraredSensor,0.08686488418956145
+Humidity,0.0697191620368207
+CO_GasSensor,0.02345833335185362
+Ambient Light Level_very_bright,0.010848185140214532
+Ambient Light Level_bright,0.010236680058257229
+HVAC Operation Mode_off,0.008557585256984567
+HVAC Operation Mode_maintenance_mode,0.00844559215252935
+HVAC Operation Mode_heating_active,0.008154380375895413
+Time of Day_afternoon,0.00813829741001508
+HVAC Operation Mode_eco_mode,0.00793843327339421
+Time of Day_morning,0.007835262313696714
+HVAC Operation Mode_ventilation_only,0.007814224057632508
+HVAC Operation Mode_cooling_active,0.007497317417976551
+Time of Day_evening,0.0072529098054372335
+Ambient Light Level_moderate,0.007242851393005081
+Time of Day_night,0.006157888650608124
+Ambient Light Level_dim,0.00493118890862836
+Ambient Light Level_very_dim,0.004143314585804407

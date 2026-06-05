@@ -33,7 +33,7 @@ class TuningPipeline:
 
         print("\n[tuning_pipeline] Step 2: Preparing model-ready data...")
         data = DataService(
-            apply_imbalance_handling=True
+            apply_imbalance_handling=False
         ).prepare()
 
         trainer = TrainingService()
