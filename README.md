@@ -127,8 +127,6 @@ python -m src.main
 
 
 ---
-
-```markdown
 # Machine Learning Pipeline
 
 gas_monitoring.db
@@ -179,6 +177,7 @@ Outputs will be generated in:
 reports/
 saved_model/
 data/processed/
+
 ```
 # Docker Usage
 
