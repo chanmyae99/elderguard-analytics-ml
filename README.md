@@ -84,74 +84,158 @@ elderguard-analytics-ml/
 
 ---
 
-# How to Run the Pipeline
+## How to Run the Pipeline
 
-## Step 1: Create Virtual Environment
+### 1. Clone the Repository
 
-### Windows
+```bash
+git clone https://github.com/chanmyae99/elderguard-analytics-ml.git
+cd elderguard-analytics-ml
+```
+
+### 2. Create a Python Virtual Environment
 
 ```bash
 python -m venv .venv
+```
+
+Activate the virtual environment:
+
+**Windows**
+
+```bash
 .venv\Scripts\activate
 ```
 
-### Linux / MacOS
+**Linux/macOS**
 
 ```bash
-python -m venv .venv
 source .venv/bin/activate
 ```
 
----
-
-## Step 2: Install Dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## Step 3: Run the Machine Learning Pipeline
+### 4. Run the Machine Learning Pipeline
 
 ```bash
 python -m src.main
 ```
 
-The pipeline performs the following tasks:
-
-1. Data preprocessing
-2. Feature engineering
-3. Data splitting
-4. Model training
-5. Model evaluation
-6. Best model selection
-7. Model persistence
 
 ---
+# Machine Learning Pipeline
 
-# Docker Development Environment
+gas_monitoring.db
+        ↓
+Data Preprocessing
+        ↓
+Feature Engineering
+        ↓
+Train/Test Split
+        ↓
+Model Training
+        ↓
+Model Evaluation
+        ↓
+Best Model Selection
+        ↓
+saved_model/best_model.pkl
 
-## Build Docker Image
+# Hyperparameter Tuning Pipeline
+
+A separate tuning pipeline was developed to support future model improvements without modifying the production pipeline.
+
+The tuning pipeline performs:
+
+- RandomizedSearchCV
+- 5-Fold Cross Validation
+- Random Forest Hyperparameter Optimization
+- XGBoost Hyperparameter Optimization
+
+Pipeline flow:
+
+```text
+Training Dataset
+        ↓
+RandomizedSearchCV
+        ↓
+Cross Validation
+        ↓
+Best Parameters
+        ↓
+Tuning Reports
+        ↓
+config/config.yaml
+```
+
+Outputs will be generated in:
+
+```text
+reports/
+saved_model/
+data/processed/
+
+```
+# Docker Usage
+
+Docker is used for both development and deployment.
+
+## Development Environment
+
+A separate tuning pipeline is available for model experimentation and future model improvements.
+
+Run the tuning pipeline:
+
+```bash
+docker compose up tuning
+```
+## Docker Deployment
+
+### Build the Docker Image
 
 ```bash
 docker compose build
 ```
 
-## Run Docker Container
+### Run the Containerized Pipeline
 
 ```bash
-docker compose up
+docker compose up elderguard-ml
 ```
 
-## Stop Docker Container
+The container will automatically:
+
+1. Load the dataset
+2. Execute the complete ML pipeline
+3. Save trained models
+4. Generate evaluation reports
+
+### Stop the Container
 
 ```bash
 docker compose down
 ```
 
-The Docker container automatically executes the complete machine learning pipeline.
+---
 
+### Add Docker Volumes section
+
+Immediately after Docker Usage:
+
+
+# Docker Volumes
+
+The following Docker volumes are configured:
+
+```text
+./data:/app/data
+./reports:/app/reports
+./saved_model:/app/saved_model
+```
 ---
 
 # Summary of EDA Findings
@@ -378,3 +462,17 @@ The solution includes:
 * Docker containerization
 
 Among the three machine learning models evaluated, Random Forest achieved the best overall performance and was selected as the final model for deployment.
+
+# Future Improvements
+
+Although Random Forest achieved the best overall performance, the model showed difficulty distinguishing between Moderate and High activity levels.
+
+Future improvements may include:
+
+- Additional feature engineering
+- Collection of more balanced training data
+- Ensemble learning techniques
+- Automated retraining pipelines
+- Continuous model monitoring and performance tracking
+
+The separate hyperparameter tuning pipeline allows future model improvements without modifying the production machine learning pipeline.
