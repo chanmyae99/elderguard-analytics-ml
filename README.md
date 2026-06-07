@@ -226,7 +226,7 @@ docker compose down
 
 Immediately after Docker Usage:
 
-```markdown
+
 # Docker Volumes
 
 The following Docker volumes are configured:
@@ -236,6 +236,8 @@ The following Docker volumes are configured:
 ./reports:/app/reports
 ./saved_model:/app/saved_model
 ```
+---
+
 # Summary of EDA Findings
 
 The dataset contains environmental sensor readings collected from smart indoor monitoring systems to predict human activity levels.
