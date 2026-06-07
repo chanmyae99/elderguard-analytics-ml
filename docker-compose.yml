@@ -1,0 +1,9 @@
+services:
+  elderguard-ml:
+    build: .
+    container_name: elderguard-ml
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+      - ./saved_model:/app/saved_model
+    
