@@ -170,6 +170,7 @@ Best Parameters
 Tuning Reports
         ↓
 config/config.yaml
+```
 
 Outputs will be generated in:
 
@@ -191,7 +192,7 @@ Run the tuning pipeline:
 
 ```bash
 docker compose up tuning
-
+```
 ## Docker Deployment
 
 ### Build the Docker Image
@@ -234,7 +235,7 @@ The following Docker volumes are configured:
 ./data:/app/data
 ./reports:/app/reports
 ./saved_model:/app/saved_model
-
+```
 # Summary of EDA Findings
 
 The dataset contains environmental sensor readings collected from smart indoor monitoring systems to predict human activity levels.
