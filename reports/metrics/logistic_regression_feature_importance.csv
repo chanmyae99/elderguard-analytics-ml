@@ -1,25 +1,25 @@
 feature,importance
-MetalOxideSensor_Unit4,0.2553507844932299
-MetalOxideSensor_Unit2,0.21625681131828753
-CO2_ElectroChemicalSensor,0.20359011100178928
-MetalOxideSensor_Unit1,0.14964889791219582
-Humidity,0.0893360970990536
-CO_GasSensor,0.08146851289825924
-CO2_InfraredSensor,0.040193010528981714
-Temperature,0.04016538576346146
-HVAC Operation Mode_maintenance_mode,0.03214805994049418
-HVAC Operation Mode_cooling_active,0.026381335774208703
-Ambient Light Level_dim,0.02286538899176757
-Ambient Light Level_very_dim,0.021915816807083887
-HVAC Operation Mode_ventilation_only,0.021558641124456424
-HVAC Operation Mode_off,0.019898761244854787
-HVAC Operation Mode_heating_active,0.015605716396969296
-HVAC Operation Mode_eco_mode,0.014903881934074414
-Ambient Light Level_bright,0.014063666733400244
-Ambient Light Level_moderate,0.013728845811276194
-Time of Day_afternoon,0.012904941936436742
-Ambient Light Level_very_bright,0.011784916681804843
-MetalOxideSensor_Unit3,0.011243225472768794
-Time of Day_night,0.008982503628668285
-Time of Day_evening,0.0029145446480648533
-Time of Day_morning,0.0028665569172273667
+MetalOxideSensor_Unit4,0.203773591116193
+MetalOxideSensor_Unit2,0.16597959299200002
+CO2_ElectroChemicalSensor,0.15924586370918967
+MetalOxideSensor_Unit1,0.11902831249251576
+Humidity,0.10068212482773718
+CO_GasSensor,0.05186628990600627
+Temperature,0.03480599277943042
+HVAC Operation Mode_maintenance_mode,0.027304305002300813
+CO2_InfraredSensor,0.026370386213548137
+Ambient Light Level_very_dim,0.026128908589775263
+HVAC Operation Mode_eco_mode,0.018692793064585888
+Time of Day_night,0.016018605927930803
+Ambient Light Level_bright,0.015788735566330776
+HVAC Operation Mode_ventilation_only,0.01522414046436651
+HVAC Operation Mode_heating_active,0.014539838173277031
+HVAC Operation Mode_cooling_active,0.013821322207335776
+HVAC Operation Mode_off,0.012485999502590633
+Ambient Light Level_moderate,0.012485545854691193
+Ambient Light Level_very_bright,0.01245232706577692
+MetalOxideSensor_Unit3,0.012141875216867147
+Ambient Light Level_dim,0.011254474216839484
+Time of Day_afternoon,0.00885832522192754
+Time of Day_evening,0.0062474899525759965
+Time of Day_morning,0.003085376963707563

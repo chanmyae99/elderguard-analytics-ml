@@ -1,25 +1,25 @@
 feature,importance
-Ambient Light Level_very_dim,0.11380889
-Ambient Light Level_dim,0.09492455
-HVAC Operation Mode_cooling_active,0.06389951
-HVAC Operation Mode_off,0.061547946
-HVAC Operation Mode_maintenance_mode,0.056083966
-HVAC Operation Mode_eco_mode,0.053418275
-Ambient Light Level_moderate,0.05281108
-HVAC Operation Mode_ventilation_only,0.052399814
-HVAC Operation Mode_heating_active,0.050296377
-MetalOxideSensor_Unit4,0.040419858
-Time of Day_evening,0.039689727
-CO_GasSensor,0.034219123
-Ambient Light Level_bright,0.033171527
-Time of Day_night,0.028751386
-Ambient Light Level_very_bright,0.027607385
-MetalOxideSensor_Unit2,0.02719584
-Time of Day_afternoon,0.025775943
-Time of Day_morning,0.0251143
-CO2_ElectroChemicalSensor,0.021139443
-MetalOxideSensor_Unit3,0.020682301
-MetalOxideSensor_Unit1,0.020550994
-CO2_InfraredSensor,0.018924955
-Humidity,0.018809672
-Temperature,0.018757159
+MetalOxideSensor_Unit4,0.06745271
+Ambient Light Level_very_dim,0.05485206
+Ambient Light Level_dim,0.05026446
+MetalOxideSensor_Unit2,0.04833516
+CO_GasSensor,0.047496583
+MetalOxideSensor_Unit3,0.04593957
+Time of Day_evening,0.04284648
+HVAC Operation Mode_off,0.042456634
+CO2_ElectroChemicalSensor,0.042114113
+Ambient Light Level_moderate,0.041255243
+HVAC Operation Mode_eco_mode,0.040919114
+HVAC Operation Mode_ventilation_only,0.040793817
+Temperature,0.03972535
+MetalOxideSensor_Unit1,0.039638035
+HVAC Operation Mode_cooling_active,0.039504185
+HVAC Operation Mode_heating_active,0.038158886
+Humidity,0.03797057
+HVAC Operation Mode_maintenance_mode,0.037496593
+CO2_InfraredSensor,0.03683746
+Time of Day_night,0.035805594
+Time of Day_afternoon,0.034617938
+Ambient Light Level_bright,0.033925682
+Time of Day_morning,0.032669604
+Ambient Light Level_very_bright,0.028924098
