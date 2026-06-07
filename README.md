@@ -222,7 +222,7 @@ docker compose down
 
 ---
 
-### 3. Add Docker Volumes section
+### Add Docker Volumes section
 
 Immediately after Docker Usage:
 
