@@ -84,75 +84,90 @@ elderguard-analytics-ml/
 
 ---
 
-# How to Run the Pipeline
+## How to Run the Pipeline
 
-## Step 1: Create Virtual Environment
+### 1. Clone the Repository
 
-### Windows
+```bash
+git clone https://github.com/chanmyae99/elderguard-analytics-ml.git
+cd elderguard-analytics-ml
+```
+
+### 2. Create a Python Virtual Environment
 
 ```bash
 python -m venv .venv
+```
+
+Activate the virtual environment:
+
+**Windows**
+
+```bash
 .venv\Scripts\activate
 ```
 
-### Linux / MacOS
+**Linux/macOS**
 
 ```bash
-python -m venv .venv
 source .venv/bin/activate
 ```
 
----
-
-## Step 2: Install Dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## Step 3: Run the Machine Learning Pipeline
+### 4. Run the Machine Learning Pipeline
 
 ```bash
 python -m src.main
 ```
 
-The pipeline performs the following tasks:
+The pipeline will:
 
-1. Data preprocessing
-2. Feature engineering
-3. Data splitting
-4. Model training
-5. Model evaluation
-6. Best model selection
-7. Model persistence
+1. Ingest data from SQLite database
+2. Perform data cleaning and preprocessing
+3. Apply feature engineering
+4. Train machine learning models
+5. Evaluate model performance
+6. Save reports and trained models
 
----
+Outputs will be generated in:
 
-# Docker Development Environment
+```text
+reports/
+saved_model/
+data/processed/
+```
 
-## Build Docker Image
+## Docker Deployment
+
+### Build the Docker Image
 
 ```bash
 docker compose build
 ```
 
-## Run Docker Container
+### Run the Containerized Pipeline
 
 ```bash
 docker compose up
 ```
 
-## Stop Docker Container
+The container will automatically:
+
+1. Load the dataset
+2. Execute the complete ML pipeline
+3. Save trained models
+4. Generate evaluation reports
+
+### Stop the Container
 
 ```bash
 docker compose down
 ```
-
-The Docker container automatically executes the complete machine learning pipeline.
-
----
 
 # Summary of EDA Findings
 
