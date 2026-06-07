@@ -125,14 +125,53 @@ pip install -r requirements.txt
 python -m src.main
 ```
 
-The pipeline will:
 
-1. Ingest data from SQLite database
-2. Perform data cleaning and preprocessing
-3. Apply feature engineering
-4. Train machine learning models
-5. Evaluate model performance
-6. Save reports and trained models
+---
+
+```markdown
+# Machine Learning Pipeline
+
+gas_monitoring.db
+        ↓
+Data Preprocessing
+        ↓
+Feature Engineering
+        ↓
+Train/Test Split
+        ↓
+Model Training
+        ↓
+Model Evaluation
+        ↓
+Best Model Selection
+        ↓
+saved_model/best_model.pkl
+
+# Hyperparameter Tuning Pipeline
+
+A separate tuning pipeline was developed to support future model improvements without modifying the production pipeline.
+
+The tuning pipeline performs:
+
+- RandomizedSearchCV
+- 5-Fold Cross Validation
+- Random Forest Hyperparameter Optimization
+- XGBoost Hyperparameter Optimization
+
+Pipeline flow:
+
+```text
+Training Dataset
+        ↓
+RandomizedSearchCV
+        ↓
+Cross Validation
+        ↓
+Best Parameters
+        ↓
+Tuning Reports
+        ↓
+config/config.yaml
 
 Outputs will be generated in:
 
@@ -141,6 +180,18 @@ reports/
 saved_model/
 data/processed/
 ```
+# Docker Usage
+
+Docker is used for both development and deployment.
+
+## Development Environment
+
+A separate tuning pipeline is available for model experimentation and future model improvements.
+
+Run the tuning pipeline:
+
+```bash
+docker compose up tuning
 
 ## Docker Deployment
 
@@ -153,7 +204,7 @@ docker compose build
 ### Run the Containerized Pipeline
 
 ```bash
-docker compose up
+docker compose up elderguard-ml
 ```
 
 The container will automatically:
@@ -168,6 +219,22 @@ The container will automatically:
 ```bash
 docker compose down
 ```
+
+---
+
+### 3. Add Docker Volumes section
+
+Immediately after Docker Usage:
+
+```markdown
+# Docker Volumes
+
+The following Docker volumes are configured:
+
+```text
+./data:/app/data
+./reports:/app/reports
+./saved_model:/app/saved_model
 
 # Summary of EDA Findings
 
@@ -393,3 +460,17 @@ The solution includes:
 * Docker containerization
 
 Among the three machine learning models evaluated, Random Forest achieved the best overall performance and was selected as the final model for deployment.
+
+# Future Improvements
+
+Although Random Forest achieved the best overall performance, the model showed difficulty distinguishing between Moderate and High activity levels.
+
+Future improvements may include:
+
+- Additional feature engineering
+- Collection of more balanced training data
+- Ensemble learning techniques
+- Automated retraining pipelines
+- Continuous model monitoring and performance tracking
+
+The separate hyperparameter tuning pipeline allows future model improvements without modifying the production machine learning pipeline.
