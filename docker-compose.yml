@@ -6,4 +6,13 @@ services:
       - ./data:/app/data
       - ./reports:/app/reports
       - ./saved_model:/app/saved_model
-    
+    command: python -m src.main
+
+  tuning:
+    build: .
+    container_name: elderguard-tuning
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+      - ./saved_model:/app/saved_model
+    command: python -m src.tuning_pipeline
