@@ -129,6 +129,7 @@ python -m src.main
 ---
 # Machine Learning Pipeline
 
+```text
 gas_monitoring.db
         ↓
 Data Preprocessing
@@ -144,6 +145,7 @@ Model Evaluation
 Best Model Selection
         ↓
 saved_model/best_model.pkl
+```
 
 # Hyperparameter Tuning Pipeline
 
