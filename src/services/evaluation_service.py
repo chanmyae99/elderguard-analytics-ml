@@ -14,7 +14,8 @@ models and identify key features for Activity Level prediction.
 """
 
 import os
-
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 import joblib
@@ -361,17 +362,4 @@ class EvaluationService:
             f"{best_model_path}"
         )
 
-if __name__ == "__main__":
 
-    from src.services.data_service import DataService
-    from src.services.training_service import TrainingService
-
-    data = DataService(apply_imbalance_handling=True).prepare()
-
-    models = TrainingService().train_all(data)
-
-    evaluator = EvaluationService()
-
-    results = evaluator.evaluate_all(models, data)
-
-    print(results)
