@@ -272,6 +272,22 @@ The following Docker volumes are configured:
 ./reports:/app/reports
 ./saved_model:/app/saved_model
 ```
+### Volume Usage
+
+| Volume                           | Description                                                                                     |
+| -------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `./data:/app/data`               | Stores raw and processed datasets used by the machine learning pipeline.                        |
+| `./reports:/app/reports`         | Stores generated evaluation reports, confusion matrices, and feature importance visualizations. |
+| `./saved_model:/app/saved_model` | Stores trained machine learning models (`.pkl` files) for future inference and deployment.      |
+
+### Benefits
+
+Docker volumes ensure that machine learning artifacts remain available even when containers are stopped, removed, or rebuilt. This supports:
+
+* Persistent storage of datasets, reports, and trained models
+* Reproducible development and deployment environments
+* Separation of application code from generated outputs
+* Easier model management and experiment tracking
 
 ---
 
