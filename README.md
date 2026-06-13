@@ -11,6 +11,27 @@
 ![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite)
 ![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?logo=git)
 ![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)
+
+## Table of Contents
+
+- [Group Information](#group-information)
+- [Python Files Written](#python-files-written)
+- [Project Structure](#project-structure)
+- [How to Run the Pipeline](#how-to-run-the-pipeline)
+- [Machine Learning Pipeline](#machine-learning-pipeline)
+- [Hyperparameter Tuning Pipeline](#hyperparameter-tuning-pipeline)
+- [Docker Usage](#docker-usage)
+- [Docker Volumes](#docker-volumes)
+- [Summary of EDA Findings](#summary-of-eda-findings)
+- [Feature Engineering](#feature-engineering)
+- [Models Used](#models-used)
+- [Hyperparameter Tuning](#hyperparameter-tuning)
+- [Evaluation Metrics](#evaluation-metrics)
+- [Final Model Results](#final-model-results)
+- [Output Generated](#output-generated)
+- [Conclusion](#conclusion)
+- [Future Improvements](#future-improvements)
+
 ## Group Information
 
 ### Group Name
@@ -242,11 +263,6 @@ docker compose down
 
 ---
 
-### Add Docker Volumes section
-
-Immediately after Docker Usage:
-
-
 # Docker Volumes
 
 The following Docker volumes are configured:
@@ -256,6 +272,7 @@ The following Docker volumes are configured:
 ./reports:/app/reports
 ./saved_model:/app/saved_model
 ```
+
 ---
 
 # Summary of EDA Findings
