@@ -1,5 +1,16 @@
 # ElderGuard Analytics ML
+## Tech Stack
 
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Processing-150458?logo=pandas)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Machine%20Learning-F7931E?logo=scikitlearn)
+![XGBoost](https://img.shields.io/badge/XGBoost-Gradient%20Boosting-EC6B23)
+![NumPy](https://img.shields.io/badge/NumPy-Numerical%20Computing-013243?logo=numpy)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-Visualization-11557C)
+![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?logo=docker)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite)
+![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?logo=git)
+![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)
 ## Group Information
 
 ### Group Name
@@ -23,8 +34,12 @@ Team X
 | File                               | Purpose                                                                         |
 | ---------------------------------- | ------------------------------------------------------------------------------- |
 | notebooks/eda.ipynb                | Exploratory Data Analysis                                                       |
+| src/ingestion/sqlite_loader.py     | Data Loader for raw dataset                                                     |
+| src/ingestion/csv_loader.py        | Data Loader for processed dataset                                               |
 | src/services/data_service.py       | Data loading, train-test split and feature preparation                          |
 | src/services/evaluation_service.py | Model evaluation, metrics generation, confusion matrices and feature importance |
+| src/pipeline.py                    | Orchestrates the end-to-end machine learning workflow.                          |
+| src/main.py                        | Entry point for running the complete machine learning pipeline.                 |
 | Dockerfile                         | Containerization configuration                                                  |
 | docker-compose.yml                 | Docker orchestration                                                            |
 | run.sh                             | Pipeline startup script                                                         |
@@ -33,6 +48,7 @@ Team X
 
 | File                                    | Purpose                            |
 | --------------------------------------- | ---------------------------------- |
+| src/models/base_model.py                | Base Model implementation          |
 | src/models/logistic_regression_model.py | Logistic Regression implementation |
 | src/models/random_forest_model.py       | Random Forest implementation       |
 | src/models/xgboost_model.py             | XGBoost implementation             |
@@ -43,9 +59,11 @@ Team X
 
 | File                                   | Purpose                              |
 | -------------------------------------- | ------------------------------------ |
+| src/preprocessing/data_splitter.py     | Handles train-test splitting         |
 | src/preprocessing/data_preprocessor.py | Data cleaning and preprocessing      |
 | src/preprocessing/feature_engineer.py  | Feature engineering and encoding     |
 | src/preprocessing/imbalance_handler.py | Class imbalance handling using SMOTE |
+
 
 ---
 
