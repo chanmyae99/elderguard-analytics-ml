@@ -28,8 +28,14 @@ class DataService:
 
     def __init__(self, apply_imbalance_handling: bool = False):
         self.apply_imbalance_handling = apply_imbalance_handling
+
+        # Tree-based models do not require feature scaling
         self.tree_feature_engineer = FeatureEngineer(apply_scaling=False)
+
+        # Logistic Regression requires scaled features for stable optimization
         self.lr_feature_engineer = FeatureEngineer(apply_scaling=True)
+
+
         self.class_names = None
 
     def prepare(self):
@@ -43,8 +49,10 @@ class DataService:
 
         df = self._load_data()
 
+        # Perform train-test split before feature engineering to prevent data leakage
         train_df, test_df = self._split_dataframe(df)
 
+        # Generate unscaled features for tree-based models
         X_train_tree, y_train = self.tree_feature_engineer.fit_transform(
             train_df
         )
@@ -52,6 +60,7 @@ class DataService:
             test_df
         )
 
+        # Generate scaled features for Logistic Regression
         X_train_lr, _ = self.lr_feature_engineer.fit_transform(
             train_df
         )
@@ -59,9 +68,13 @@ class DataService:
             test_df
         )
 
+        # Store class labels for reporting and visualization
         self.class_names = self.tree_feature_engineer.class_names
 
         if self.apply_imbalance_handling:
+
+            # Apply SMOTE only to the training data to avoid contaminating
+            # the test set with synthetic samples
             X_train_tree, X_train_lr, y_train = self._apply_smote(
                 X_train_tree,
                 X_train_lr,
@@ -79,6 +92,8 @@ class DataService:
         }
 
     def _load_data(self) -> pd.DataFrame:
+
+        # Load the cleaned dataset produced by the preprocessing pipeline
         loader = CSVLoader(PROCESSED_DATA_PATH)
         df = loader.load()
 
@@ -96,6 +111,8 @@ class DataService:
             df,
             test_size=TEST_SIZE,
             random_state=RANDOM_STATE,
+
+            # Preserve class distribution across train and test sets
             stratify=df[TARGET_COL],
         )
 
@@ -114,16 +131,20 @@ class DataService:
         The same y_train must be used for both feature versions.
         """
 
+        # Initialize SMOTE handler for minority class oversampling
         handler = ImbalanceHandler(
             enabled=True,
             random_state=RANDOM_STATE
         )
-
+        
+        # Resample tree-model features and target labels
         X_train_tree_resampled, y_train_resampled = handler.handle(
             X_train_tree,
             y_train
         )
 
+        # Resample Logistic Regression features using the same target labels
+        # to keep both feature representations aligned
         X_train_lr_resampled, _ = handler.handle(
             X_train_lr,
             y_train
